@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deicide UI</title>
+
+    <style>
+        /* https://github.com/shikijs/shiki/issues/3 */
+        code {
+            counter-reset: step;
+            counter-increment: step calc(var(--line-number-start, 1) - 1);
+        }
+
+        code .line::before {
+            content: counter(step);
+            counter-increment: step;
+            width: 1rem;
+            margin-right: 1.5rem;
+            display: inline-block;
+            text-align: right;
+            color: rgba(115, 138, 148, .4)
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        class="sourcecode"
+        data-sourcecode="cHVibGljIGNsYXNzIEZvbyB7CiAgICBwcml2YXRlIGludCBiYXI7CiAgICAvLyBUT0RPCn0"
+        style="--line-number-start: 1">
+    </div>
+
+    <script src="dist/bundle.js"></script>
+</body>
+
+</html>
