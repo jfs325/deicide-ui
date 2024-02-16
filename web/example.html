@@ -6,7 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Deicide UI</title>
+    <style>
+        .no-pointer-events {
+            pointer-events: none;
+        }
+    </style>
+    <style>
+        #tooltip {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 5px;
+            z-index: 1000;
+            display: none; /* Initially don't display the tooltip */
+        }
 
+        #tooltip a {
+            pointer-events: auto; /* Enable interaction for the link */
+            color: blue; /* Styling the link color */
+            text-decoration: underline; /* Underline to indicate it's clickable */
+        }
+    </style>
     <style>
         /* https://github.com/shikijs/shiki/issues/3 */
         code {
@@ -34,6 +56,7 @@
     </div> -->
 
     <div id="chart"></div>
+    <div id="tooltip"></div>
     <script src="dist/bundle.js"></script>
 </body>
 
