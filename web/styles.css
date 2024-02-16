@@ -1,0 +1,42 @@
+.no-pointer-events {
+    pointer-events: none;
+}
+/* 
+#tooltip {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    background-color: white;
+    border: 1px solid #444;
+    padding: 5px;
+    z-index: 1000;
+    transition: opacity 0.2s ease-in-out, visibility 0s ease-in-out; 
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    visibility: hidden; 
+} 
+*/
+
+#tooltip {
+    position: absolute;
+    opacity: 0; /* Start invisible */
+    visibility: hidden; /* Start as not affecting layout */
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+    border: 1.8px solid rgba(0, 0, 0, 0.6); /* Softer, lighter border */
+    padding: 5px;
+    z-index: 1000;
+    border-radius: 5px; /* Slightly rounded edges */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer drop shadow */
+    transition: opacity 0.4s ease-in-out, visibility 0s 0.4s; /* Adjust for fade-in effect */
+    backdrop-filter: blur(3px); /* Apply a blur effect to the background */
+    -webkit-backdrop-filter: blur(3px); /* For Safari compatibility */
+    color: #333; /* Dark grey text for better readability */
+}
+
+
+
+#tooltip a {
+    pointer-events: auto; /* Enable interaction for the link */
+    color: blue; /* Styling the link color */
+    text-decoration: underline; /* Underline to indicate it's clickable */
+}

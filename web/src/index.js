@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import * as data from "./flare.json";
+import "../styles.css";
 
 let isMouseOverTooltip = false;
 let isMouseOverText = false;
@@ -8,10 +9,11 @@ let hideTooltipTimeoutId = null;
 function attachTextEventListeners() {
     d3.selectAll("text")
         .on('mouseover', function(event, d) {
+            clearTimeout(hideTooltipTimeoutId); // Prevent the tooltip from hiding when mouse moves over it
+            isMouseOverText = true;
             d3.selectAll("text").classed("no-pointer-events", function(current) {
                 return d !== current;
             });
-            isMouseOverText = true;
             console.log("text mouseover");
             const tooltip = d3.select('#tooltip');
 
@@ -21,25 +23,18 @@ function attachTextEventListeners() {
             // Calculate position based on the bounding rectangle
             // Adjust '20' based on desired tooltip position relative to the text
             const x = rect.left + (rect.width / 2) + window.scrollX;
-            const y = rect.top + window.scrollY;   
-            tooltip.style('opacity', 1)
-                    .style('display', 'block')
+            const y = rect.top + window.scrollY;
+            tooltip.style('visibility', 'visible') // Make visible and start fade-in
+                    .style('opacity', 1)
                     .style('left', `${x - 50}px`)
-                    .style('top', `${y - 28}px`) // Position below the cursor or element
+                    .style('top', `${y - 30}px`) // Position below the cursor or element
                     .html(`<a href="https://github.com" target="_blank">Generic Link</a>`); // Add a clickable link
             
         })
         .on('mouseout', function() {
             console.log("text mouseout");
             isMouseOverText = false;
-            
-            hideTooltipTimeoutId = setTimeout(() => {
-            if(!isMouseOverTooltip && !isMouseOverText) {
-                d3.select('#tooltip').style('opacity', 0).style('display', 'none');
-                d3.selectAll("text").classed("no-pointer-events", false);
-
-            }
-            }, 50);
+            hideToolTip();
         })
 }
 
@@ -54,15 +49,24 @@ function attachToolTipEventListeners() {
     })
     .on('mouseout', function() {
         console.log("tooltip mouseout");
-        clearTimeout(hideTooltipTimeoutId); // Prevent the tooltip from hiding when mouse moves over it
+        // clearTimeout(hideTooltipTimeoutId); // Prevent the tooltip from hiding when mouse moves over it
         isMouseOverTooltip = false;
-        if (!isMouseOverText && !isMouseOverTooltip) {
-            d3.select(this).style('opacity', 0).style('display', 'none'); 
-            d3.selectAll("text").classed("no-pointer-events", false);
-        }
+        hideToolTip();
     });
 }
 
+function hideToolTip() {
+    hideTooltipTimeoutId = setTimeout(() => {
+        if(!isMouseOverTooltip && !isMouseOverText) {
+            d3.select('#tooltip').style('opacity', 0);
+            setTimeout(() => {
+                d3.select('#tooltip').style('visibility', 'hidden');
+                d3.selectAll("text").classed("no-pointer-events", false);
+
+            }, 200);
+        }
+    }, 150);
+}
 
 function chart() {
     const width = 928;
